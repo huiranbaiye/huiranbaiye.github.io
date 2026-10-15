@@ -343,16 +343,89 @@
     line-height: 1.6;
     margin-bottom: 14px;
   }
-  .anime-link {
-    display: inline-flex;
+
+  /* 豆瓣评分票根 */
+  .rating-ticket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #F5F7FA 0%, #EBEDEF 100%);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    position: relative;
+    border: 1px dashed var(--border);
+  }
+  .rating-ticket::before,
+  .rating-ticket::after {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px;
+    background: var(--bg);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .rating-ticket::before { left: -7px; }
+  .rating-ticket::after { right: -7px; }
+  .rating-ticket:hover {
+    border-color: var(--accent);
+    border-style: solid;
+    box-shadow: 0 4px 14px rgba(200,134,26,0.15);
+  }
+  .rating-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .rating-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .rating-divider {
+    width: 1px;
+    height: 26px;
+    background: var(--border);
+  }
+  .rating-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .rating-stars {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .rating-label {
+    font-size: 11px;
+    color: var(--text-3);
+    line-height: 1;
+  }
+  .rating-right {
+    display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
-    color: var(--accent);
-    text-decoration: none;
+    font-size: 12px;
+    color: var(--text-3);
+    transition: all 0.25s;
     font-weight: 500;
   }
-  .anime-link:hover { text-decoration: underline; }
+  .rating-ticket:hover .rating-right {
+    color: var(--accent);
+  }
+  .rating-right svg {
+    transition: transform 0.25s;
+  }
+  .rating-ticket:hover .rating-right svg {
+    transform: translateX(3px);
+  }
 
   /* ===== Contact ===== */
   .contact-box {
@@ -587,13 +660,22 @@
       <div class="anime-info">
         <h3>命运石之门</h3>
         <p>时间穿越神作。前期慢热，后期封神。冈部伦太郎在无数条世界线中挣扎，只为拯救最重要的人。</p>
-        <a href="https://movie.douban.com/subject/3023232/" target="_blank" class="anime-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
-          豆瓣评分
+        <a href="https://movie.douban.com/subject/3023232/" target="_blank" class="rating-ticket">
+          <div class="rating-left">
+            <span class="rating-score">9.3</span>
+            <span class="rating-divider"></span>
+            <div class="rating-meta">
+              <span class="rating-stars">★★★★★</span>
+              <span class="rating-label">豆瓣评分</span>
+            </div>
+          </div>
+          <div class="rating-right">
+            查看
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </a>
       </div>
     </div>
@@ -603,13 +685,22 @@
       <div class="anime-info">
         <h3>凉宫春日的忧郁</h3>
         <p>SOS团的故事。团长不知道自己拥有改变世界的力量，而阿虚是唯一能约束她的人。轻改鼻祖。</p>
-        <a href="https://movie.douban.com/subject/1810517/" target="_blank" class="anime-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
-          豆瓣评分
+        <a href="https://movie.douban.com/subject/1810517/" target="_blank" class="rating-ticket">
+          <div class="rating-left">
+            <span class="rating-score">8.8</span>
+            <span class="rating-divider"></span>
+            <div class="rating-meta">
+              <span class="rating-stars">★★★★☆</span>
+              <span class="rating-label">豆瓣评分</span>
+            </div>
+          </div>
+          <div class="rating-right">
+            查看
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </a>
       </div>
     </div>
@@ -619,13 +710,22 @@
       <div class="anime-info">
         <h3>从零开始的异世界生活</h3>
         <p>菜月昴穿越到异世界，拥有"死亡回归"。每次死亡都带着记忆重来，为守护身边的人不断轮回。</p>
-        <a href="https://movie.douban.com/subject/26641997/" target="_blank" class="anime-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <line x1="10" y1="14" x2="21" y2="3"></line>
-          </svg>
-          豆瓣评分
+        <a href="https://movie.douban.com/subject/26641997/" target="_blank" class="rating-ticket">
+          <div class="rating-left">
+            <span class="rating-score">8.5</span>
+            <span class="rating-divider"></span>
+            <div class="rating-meta">
+              <span class="rating-stars">★★★★☆</span>
+              <span class="rating-label">豆瓣评分</span>
+            </div>
+          </div>
+          <div class="rating-right">
+            查看
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </a>
       </div>
     </div>
@@ -640,7 +740,7 @@
     <h3>想聊聊？</h3>
     <p>无论是 C 语言作业、动漫安利，还是兵器博物馆的讲解词，都欢迎交流。</p>
     <div class="contact-links">
-      <a href="https://github.com/你的用户名" class="contact-btn primary" target="_blank">
+      <a href="https://github.com/huiranbaiye" class="contact-btn primary" target="_blank">
         GitHub
       </a>
       <a href="mailto:your@email.com" class="contact-btn ghost">
