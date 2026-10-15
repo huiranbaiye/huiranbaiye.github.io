@@ -140,6 +140,39 @@
     line-height: 1.5;
   }
 
+  /* ===== 顶部快速联系小方格 ===== */
+  .quick-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 48px 40px;
+    max-width: 1200px;
+    margin: -60px auto 0;
+    position: relative;
+    z-index: 2;
+  }
+  .quick-square {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1.5px solid #3A3F4A;
+    box-shadow: 0 0 12px rgba(255,255,255,0.7), 0 0 28px rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .quick-square:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(200,134,26,0.3);
+    transform: translateY(-3px);
+  }
+  .quick-square svg {
+    width: 26px; height: 26px;
+    fill: var(--text);
+  }
+
   /* ===== 通用 Section ===== */
   section {
     padding: 100px 48px;
@@ -160,15 +193,6 @@
   }
 
   /* ===== About ===== */
-  .about-text {
-    font-size: 18px;
-    color: var(--text-2);
-    max-width: 720px;
-    font-weight: 300;
-  }
-  .about-text strong { color: var(--text); font-weight: 500; }
-
-  /* 关于我开头段落 */
   .about-intro {
     max-width: 720px;
     margin-bottom: 40px;
@@ -444,33 +468,41 @@
     margin-bottom: 28px;
     font-weight: 300;
   }
-  .contact-links {
+  .contact-list {
     display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 460px;
+    margin: 0 auto;
+    text-align: left;
   }
-  .contact-btn {
-    display: inline-flex;
+  .contact-item {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    transition: background 0.2s;
   }
-  .contact-btn.primary {
-    background: var(--accent);
-    color: #1A1A1A;
+  .contact-item:hover { background: var(--accent-soft); }
+  .contact-item-label {
+    font-size: 13px;
+    color: var(--text-3);
+    width: 64px;
+    flex-shrink: 0;
   }
-  .contact-btn.primary:hover { background: #F0B850; }
-  .contact-btn.ghost {
-    border: 1px solid var(--border);
+  .contact-item-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
     color: var(--text);
+    font-weight: 500;
   }
-  .contact-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-item a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .contact-item a:hover { text-decoration: underline; }
 
   /* ===== Footer ===== */
   footer {
@@ -500,6 +532,7 @@
     .hero { flex-direction: column-reverse; text-align: center; gap: 32px; }
     .hero-avatar { width: 200px; height: 200px; }
     .hero-meta { flex-direction: column; gap: 20px; align-items: center; }
+    .quick-row { margin-top: -30px; padding-bottom: 24px; }
     .grid { grid-template-columns: 1fr; }
     .skills-wrap { grid-template-columns: 1fr; }
     .anime-grid { grid-template-columns: 1fr; }
@@ -537,6 +570,22 @@
   <div class="hero-right">
     <img src="assets/avatar.png" alt="头像" class="hero-avatar">
   </div>
+</div>
+
+<!-- 顶部快速联系小方格 -->
+<div class="quick-row">
+  <a href="#contact" class="quick-square" title="GitHub">
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.84 8.205 11.49.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.395-1.23-1.675-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+  </a>
+  <a href="#contact" class="quick-square" title="电话">
+    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+  </a>
+  <a href="#contact" class="quick-square" title="微信">
+    <svg viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.16 1.16 0 0 1-1.162 1.178A1.16 1.16 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.16 1.16 0 0 1-1.162 1.178 1.16 1.16 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.013-.27-.027-.406-.032zm-3.307 1.88c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
+  </a>
+  <a href="#contact" class="quick-square" title="QQ">
+    <svg viewBox="0 0 24 24"><path d="M21.395 15.035a40.093 40.093 0 0 0-.813-2.341l-1.079-3.053c.004-.006.065-.18.099-.484.047-.426.023-1.045-.003-1.518-.033-.597-.063-1.043-.063-1.043s-.052-.28-.199-.677a5.81 5.81 0 0 0-.376-.885C17.864 2.194 15.104.75 12.003.75S6.136 2.194 5.038 5.034c-.196.366-.326.685-.376.885-.147.397-.199.677-.199.677s-.03.446-.063 1.043c-.026.473-.05 1.092-.003 1.518.034.304.095.478.099.484l-1.08 3.053a40.03 40.03 0 0 0-.812 2.341c-.254.944-.494 2.023-.344 2.873.15.858.603 1.462 1.228 1.682a2.303 2.303 0 0 0 1.849-.185 4.723 4.723 0 0 0 2.332-2.086 6.049 6.049 0 0 0 5.742 0 4.723 4.723 0 0 0 2.332 2.086 2.303 2.303 0 0 0 1.849.185c.625-.22 1.078-.824 1.228-1.682.15-.85-.09-1.929-.344-2.873z"/></svg>
+  </a>
 </div>
 
 <!-- 关于 -->
@@ -739,16 +788,23 @@
   <div class="contact-box">
     <h3>想聊聊？</h3>
     <p>无论是 C 语言作业、动漫安利，还是兵器博物馆的讲解词，都欢迎交流。</p>
-    <div class="contact-links">
-      <a href="https://github.com/huiranbaiye" class="contact-btn primary" target="_blank">
-        GitHub
-      </a>
-      <a href="mailto:your@email.com" class="contact-btn ghost">
-        Email
-      </a>
-      <a href="#" class="contact-btn ghost" onclick="showToast('Bilibili 链接待补充'); return false;">
-        Bilibili
-      </a>
+    <div class="contact-list">
+      <div class="contact-item">
+        <span class="contact-item-label">GitHub</span>
+        <span class="contact-item-value"><a href="https://github.com/huiranbaiye" target="_blank">huiranbaiye</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">手机</span>
+        <span class="contact-item-value">13998079653</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">微信</span>
+        <span class="contact-item-value">hyi20498400m</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">QQ</span>
+        <span class="contact-item-value">3474864750</span>
+      </div>
     </div>
   </div>
 </section>
@@ -765,15 +821,6 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Toast 提示
-  function showToast(msg) {
-    const t = document.createElement('div');
-    t.textContent = msg;
-    t.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#C8861A;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,0.15);';
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2000);
-  }
 </script>
 
 </body>
