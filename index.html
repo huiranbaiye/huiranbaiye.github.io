@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>辉然 · 个人主页</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>辉</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #EEF0F3;
+    --surface: #FFFFFF;
+    --surface-2: #E4E7EB;
+    --border: #D5D9DF;
+    --text: #1E2128;
+    --text-2: #555963;
+    --text-3: #8B8F98;
+    --accent: #C8861A;
+    --accent-soft: rgba(200, 134, 26, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== 导航 ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(238, 240, 243, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ===== Hero ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    padding: 0 48px;
+    position: relative;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-left { flex: 1; z-index: 1; }
+  .hero-right {
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .hero-avatar {
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid var(--surface);
+    box-shadow: 0 20px 60px rgba(30, 33, 40, 0.15);
+  }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-sub {
+    font-size: 20px;
+    color: var(--text-2);
+    max-width: 560px;
+    font-weight: 300;
+  }
+  .hero-divider {
+    width: 60px; height: 3px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+  .hero-meta {
+    display: flex; gap: 40px;
+    margin-top: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .hero-meta > div { white-space: nowrap; }
+  .hero-meta strong {
+    display: block;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .hero-meta .small strong {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ===== 通用 Section ===== */
+  section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 48px;
+  }
+
+  /* ===== About ===== */
+  .about-text {
+    font-size: 18px;
+    color: var(--text-2);
+    max-width: 720px;
+    font-weight: 300;
+  }
+  .about-text strong { color: var(--text); font-weight: 500; }
+
+  /* 关于我开头段落 */
+  .about-intro {
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+  .about-intro p {
+    font-size: 17px;
+    color: var(--text-2);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-intro strong { color: var(--text); font-weight: 500; }
+
+  /* 球形序号列表 */
+  .about-list {
+    list-style: none;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .about-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .ball-num {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1E2128;
+    background: radial-gradient(circle at 30% 25%, #FFFFFF 0%, #E8ECF0 100%);
+    box-shadow: 0 0 16px rgba(255,255,255,0.95), 0 0 32px rgba(200,134,26,0.25), inset 0 -2px 4px rgba(0,0,0,0.08);
+  }
+  .about-list .item-text {
+    padding-top: 8px;
+    font-size: 17px;
+    color: var(--text-2);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .about-list .item-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ===== Interests Grid ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .card-icon svg { width: 24px; height: 24px; stroke: var(--accent); }
+  .card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card p {
+    color: var(--text-2);
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  /* ===== Skills ===== */
+  .skills-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .skill-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .skill-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .skill-level {
+    height: 6px;
+    background: var(--surface-2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .skill-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+  .skill-note {
+    margin-top: 24px;
+    color: var(--text-3);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* ===== Anime ===== */
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .anime-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .anime-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+  .anime-rank {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 6px;
+    z-index: 1;
+  }
+  .anime-card { position: relative; }
+  .anime-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+  .anime-info {
+    padding: 20px;
+  }
+  .anime-info h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .anime-info p {
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .anime-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .anime-link:hover { text-decoration: underline; }
+
+  /* ===== Contact ===== */
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 48px;
+    text-align: center;
+  }
+  .contact-box h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .contact-box p {
+    color: var(--text-2);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .contact-btn.primary {
+    background: var(--accent);
+    color: #1A1A1A;
+  }
+  .contact-btn.primary:hover { background: #F0B850; }
+  .contact-btn.ghost {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .contact-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ===== Footer ===== */
+  footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-3);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== 淡入动画 ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding-left: 24px; padding-right: 24px; }
+    .hero { flex-direction: column-reverse; text-align: center; gap: 32px; }
+    .hero-avatar { width: 200px; height: 200px; }
+    .hero-meta { flex-direction: column; gap: 20px; align-items: center; }
+    .grid { grid-template-columns: 1fr; }
+    .skills-wrap { grid-template-columns: 1fr; }
+    .anime-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav>
+  <a href="#top" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">辉然<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#interests">兴趣</a>
+    <a href="#skills">技能</a>
+    <a href="#anime">日漫</a>
+    <a href="#contact">联系</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">&lt;HELLO_WORLD /&gt;</div>
+    <h1>你好，我是<span class="accent">辉然</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">沈阳理工大学 · 在 C 语言、动漫和兵器博物馆之间来回穿梭的工科生。</p>
+    <div class="hero-meta">
+      <div><strong>沈阳</strong>理工大学</div>
+      <div class="small"><strong>探测制导与控制</strong>专业在读</div>
+      <div><strong>辽宁省</strong>鞍山市台安县</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="assets/avatar.png" alt="头像" class="hero-avatar">
+  </div>
+</div>
+
+<!-- 关于 -->
+<section id="about" class="reveal">
+  <div class="section-label">01 / ABOUT</div>
+  <h2 class="section-title">关于我</h2>
+  <div class="about-intro">
+    <p>我的名字叫<strong>陈鹏宇</strong>，你也可以用<strong>辉然</strong>来称呼我。这个名字我已经用了10年，"辉然"承载了我许多难以割舍的回忆——光辉的样子嘛，觉得很有意义。</p>
+    <p>说起惭愧，我是个什么都不会的人，不夸张，就因为这个网站啊我愁了三天，课都上不下去，逼着自己硬学习 (´；ω；`)</p>
+    <p>我希望通过大学的各种经历，来弥补我这个所有都是零的缺点。加油吧！辉然！你可以！</p>
+  </div>
+  <ul class="about-list">
+    <li>
+      <span class="ball-num">1</span>
+      <span class="item-text"><strong>沈阳理工大学</strong> · 探测制导与控制技术专业在读</span>
+    </li>
+    <li>
+      <span class="ball-num">2</span>
+      <span class="item-text">课堂主攻 <strong>C 语言</strong>，正在向专业所需的<strong>单片机/嵌入式</strong>方向靠拢</span>
+    </li>
+    <li>
+      <span class="ball-num">3</span>
+      <span class="item-text">课余<strong>追番看动漫</strong>，也是<strong>米哈游</strong>游戏常驻玩家</span>
+    </li>
+    <li>
+      <span class="ball-num">4</span>
+      <span class="item-text"><strong>兵器博物馆</strong>招新培训中，一边了解国防工业史，一边练讲解表达</span>
+    </li>
+    <li>
+      <span class="ball-num">5</span>
+      <span class="item-text"><strong>计算机协会</strong> + <strong>电子协会视觉组</strong>，折腾电子制作和视觉设计</span>
+    </li>
+  </ul>
+</section>
+
+<!-- 兴趣 -->
+<section id="interests" class="reveal">
+  <div class="section-label">02 / INTERESTS</div>
+  <h2 class="section-title">我感兴趣的事</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </div>
+      <h3>减脂进行中</h3>
+      <p>正在规律饮食和训练，减脂塑形。身体不仅是本钱，也是以后穿皮套的基础。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </div>
+      <h3>假面骑士皮套梦</h3>
+      <p>梦想之一是拥有一套自己的假面骑士皮套，成为一名 coser。变身是热爱的具象化。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+          <rect x="9" y="9" width="6" height="6"></rect>
+          <line x1="9" y1="1" x2="9" y2="4"></line>
+          <line x1="15" y1="1" x2="15" y2="4"></line>
+          <line x1="9" y1="20" x2="9" y2="23"></line>
+          <line x1="15" y1="20" x2="15" y2="23"></line>
+          <line x1="20" y1="9" x2="23" y2="9"></line>
+          <line x1="20" y1="14" x2="23" y2="14"></line>
+          <line x1="1" y1="9" x2="4" y2="9"></line>
+          <line x1="1" y1="14" x2="4" y2="14"></line>
+        </svg>
+      </div>
+      <h3>C 语言 × 单片机</h3>
+      <p>正在加强 C 语言能力，向专业所需的单片机方向靠拢。从桌面程序到嵌入式，一步步来。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 技能 -->
+<section id="skills" class="reveal">
+  <div class="section-label">03 / SKILLS</div>
+  <h2 class="section-title">正在掌握的技能</h2>
+  <div class="skills-wrap">
+    <div class="skill-item">
+      <div class="skill-name">C 语言</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 15%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">HTML / CSS</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 15%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">电子电路</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 10%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">视觉设计</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 10%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">博物馆讲解</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 15%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-name">Git / GitHub</div>
+      <div class="skill-level"><div class="skill-bar" style="width: 10%"></div></div>
+    </div>
+  </div>
+  <p class="skill-note">基本可以说是零，正在努力攻坚......(///ˊㅿˋ///)</p>
+</section>
+
+<!-- 日漫排行 -->
+<section id="anime" class="reveal">
+  <div class="section-label">04 / ANIME</div>
+  <h2 class="section-title">我喜欢的日漫排行</h2>
+  <div class="anime-grid">
+    <div class="anime-card">
+      <div class="anime-rank">No.1</div>
+      <img src="assets/anime1.jpg" alt="命运石之门" class="anime-img">
+      <div class="anime-info">
+        <h3>命运石之门</h3>
+        <p>时间穿越神作。前期慢热，后期封神。冈部伦太郎在无数条世界线中挣扎，只为拯救最重要的人。</p>
+        <a href="https://movie.douban.com/subject/3023232/" target="_blank" class="anime-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          豆瓣评分
+        </a>
+      </div>
+    </div>
+    <div class="anime-card">
+      <div class="anime-rank">No.2</div>
+      <img src="assets/anime2.jpg" alt="凉宫春日的忧郁" class="anime-img">
+      <div class="anime-info">
+        <h3>凉宫春日的忧郁</h3>
+        <p>SOS团的故事。团长不知道自己拥有改变世界的力量，而阿虚是唯一能约束她的人。轻改鼻祖。</p>
+        <a href="https://movie.douban.com/subject/1810517/" target="_blank" class="anime-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          豆瓣评分
+        </a>
+      </div>
+    </div>
+    <div class="anime-card">
+      <div class="anime-rank">No.3</div>
+      <img src="assets/anime3.jpg" alt="从零开始的异世界生活" class="anime-img">
+      <div class="anime-info">
+        <h3>从零开始的异世界生活</h3>
+        <p>菜月昴穿越到异世界，拥有"死亡回归"。每次死亡都带着记忆重来，为守护身边的人不断轮回。</p>
+        <a href="https://movie.douban.com/subject/26641997/" target="_blank" class="anime-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          豆瓣评分
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section id="contact" class="reveal">
+  <div class="section-label">05 / CONTACT</div>
+  <h2 class="section-title">联系我</h2>
+  <div class="contact-box">
+    <h3>想聊聊？</h3>
+    <p>无论是 C 语言作业、动漫安利，还是兵器博物馆的讲解词，都欢迎交流。</p>
+    <div class="contact-links">
+      <a href="https://github.com/你的用户名" class="contact-btn primary" target="_blank">
+        GitHub
+      </a>
+      <a href="mailto:your@email.com" class="contact-btn ghost">
+        Email
+      </a>
+      <a href="#" class="contact-btn ghost" onclick="showToast('Bilibili 链接待补充'); return false;">
+        Bilibili
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 辉然 · Built with HTML & CSS · Hosted on GitHub Pages
+</footer>
+
+<script>
+  // 滚动淡入动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Toast 提示
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#C8861A;color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,0.15);';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2000);
+  }
+</script>
+
+</body>
+</html>
