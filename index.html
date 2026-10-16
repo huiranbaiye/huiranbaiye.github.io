@@ -113,6 +113,37 @@ nav{padding:16px 24px}
 .anime-grid{grid-template-columns:1fr}
 .section-title{font-size:28px}
 }
+
+/* ===== 音乐旋转按钮 ===== */
+.music-disc{
+position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;
+border:2px solid rgba(200,134,26,.5);overflow:hidden;cursor:pointer;z-index:999;
+box-shadow:0 0 16px rgba(200,134,26,.25),0 4px 12px rgba(0,0,0,.15);
+background:#1a1a1a;transition:box-shadow .3s;
+}
+.music-disc:hover{box-shadow:0 0 24px rgba(200,134,26,.45),0 4px 16px rgba(0,0,0,.2);}
+.music-disc img{width:100%;height:100%;object-fit:cover;animation:spin 4s linear infinite;}
+.music-disc.paused img{animation-play-state:paused;}
+.music-disc .disc-hole{
+position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+width:14px;height:14px;border-radius:50%;background:#1E2128;border:2px solid #C8861A;
+}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ===== 雪花画布 ===== */
+#snow{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+
+/* ===== 点击白点粒子 ===== */
+.click-particle{
+position:fixed;width:6px;height:6px;border-radius:50%;background:#fff;
+pointer-events:none;z-index:9999;box-shadow:0 0 6px rgba(255,255,255,.8);
+animation:particle-fade .8s ease-out forwards;
+}
+@keyframes particle-fade{
+0%{opacity:1;transform:translate(0,0) scale(1);}
+100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2);}
+}
+
 </style>
 </head>
 <body>
@@ -258,11 +289,92 @@ nav{padding:16px 24px}
 </div>
 </section>
 
+
+<audio id="bgm" loop preload="auto">
+<source src="assets/bgm.mp3" type="audio/mpeg">
+</audio>
+<canvas id="snow"></canvas>
+<button id="musicBtn" class="music-disc" title="点击播放/暂停音乐">
+<img src="assets/music-disc.jpg" alt="music">
+<div class="disc-hole"></div>
+</button>
+
 <footer>© 2026 辉然 · Built with HTML & CSS · Hosted on GitHub Pages</footer>
 
 <script>
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ===== 音乐播放控制 =====
+const bgm=document.getElementById('bgm');
+const musicBtn=document.getElementById('musicBtn');
+let musicStarted=false;
+musicBtn.addEventListener('click',function(e){
+e.stopPropagation();
+if(bgm.paused){bgm.play();musicBtn.classList.remove('paused');}
+else{bgm.pause();musicBtn.classList.add('paused');}
+});
+// 第一次点击页面时自动尝试播放（浏览器自动播放策略要求用户交互）
+document.addEventListener('click',function once(){
+if(!musicStarted){musicStarted=true;bgm.play().catch(()=>{});musicBtn.classList.remove('paused');document.removeEventListener('click',once);}
+});
+
+// ===== 点击白点粒子 =====
+document.addEventListener('click',function(e){
+for(let i=0;i<10;i++){
+const p=document.createElement('div');
+p.className='click-particle';
+p.style.left=e.clientX+'px';
+p.style.top=e.clientY+'px';
+const angle=(Math.PI*2*i)/10+Math.random()*.5;
+const dist=30+Math.random()*30;
+p.style.setProperty('--dx',Math.cos(angle)*dist+'px');
+p.style.setProperty('--dy',Math.sin(angle)*dist+'px');
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),800);
+}
+});
+
+// ===== 飘雪花 =====
+const snowCanvas=document.getElementById('snow');
+const sctx=snowCanvas.getContext('2d');
+let snowflakes=[];
+function resizeSnow(){
+snowCanvas.width=window.innerWidth;
+snowCanvas.height=window.innerHeight;
+}
+resizeSnow();
+window.addEventListener('resize',resizeSnow);
+const SNOW_COUNT=70;
+for(let i=0;i<SNOW_COUNT;i++){
+snowflakes.push({
+x:Math.random()*snowCanvas.width,
+y:Math.random()*snowCanvas.height,
+r:1+Math.random()*2.5,
+speed:.5+Math.random()*1.2,
+drift:Math.random()*.6-.3,
+opacity:.3+Math.random()*.5
+});
+}
+function drawSnow(){
+sctx.clearRect(0,0,snowCanvas.width,snowCanvas.height);
+sctx.fillStyle='#ffffff';
+snowflakes.forEach(f=>{
+sctx.globalAlpha=f.opacity;
+sctx.beginPath();
+sctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+sctx.fill();
+f.y+=f.speed;
+f.x+=f.drift;
+if(f.y>snowCanvas.height+5){f.y=-5;f.x=Math.random()*snowCanvas.width;}
+if(f.x>snowCanvas.width+5)f.x=-5;
+if(f.x<-5)f.x=snowCanvas.width+5;
+});
+sctx.globalAlpha=1;
+requestAnimationFrame(drawSnow);
+}
+drawSnow();
+
 </script>
 
 </body>
